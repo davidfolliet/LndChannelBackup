@@ -81,9 +81,10 @@ public class LndChannelBackupServer {		//Backup lnd channel file using a tempora
 			e.printStackTrace();
 		}
 		System.out.println("read " + numCharsRead + " bytes from file");
-		if(numBytes != numCharsRead)
+		if(numBytes != numCharsRead){
 			System.out.println("ERROR READING FILE");
-		
+			return null;
+		}
 		return bytes;
 	}
 	
@@ -117,7 +118,8 @@ public class LndChannelBackupServer {		//Backup lnd channel file using a tempora
 		
 		int numBytes = getFileSize(in);
 		byte[] bytes = readFile(in, numBytes);
-		writeFile(bytes);
+		if(bytes != null)
+			writeFile(bytes);
 		listenForClient(); 				//wait for client to reconnect to backup file again
 	}
 	
